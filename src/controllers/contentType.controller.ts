@@ -10,7 +10,7 @@ import {
   updateContent,
 } from "../services/contentType.service";
 
-export const createContent = async (
+export const createContentTypeController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -31,7 +31,7 @@ export const createContent = async (
   }
 };
 
-export const getAllContents = async (
+export const getAllContentsTypeController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -46,7 +46,7 @@ export const getAllContents = async (
   }
 };
 
-export const getContentById = async (
+export const getContentTypeByIdController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -66,7 +66,7 @@ export const getContentById = async (
   }
 };
 
-export const updateContentById = async (
+export const updateContentTypeByIdController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -88,7 +88,7 @@ export const updateContentById = async (
   }
 };
 
-export const deleteContentById = async (
+export const deleteContentTypeByIdController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
