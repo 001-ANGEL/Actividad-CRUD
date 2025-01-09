@@ -1,0 +1,110 @@
+import { Request, Response } from "express";
+
+import ContentType from "../schemas/contentType";
+import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
+import { handleError } from "../middlewares/props";
+
+import {
+  deleteContent,
+  getContentTypeById,
+  updateContent,
+} from "../services/contentType.service";
+
+export const createContent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const data: ContentTypeInterface = req.body;
+    const newContent = new ContentType(data);
+    const savedContent = await newContent.save();
+
+    res.status(201).json({
+      message: "Content type created successfully",
+      data: savedContent,
+    });
+  } catch (error) {
+    handleError(error, "Create content");
+    res.status(500).json({
+      message: "An error occurred while creating the content type",
+    });
+  }
+};
+
+export const getAllContents = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const contents = await ContentType.find();
+    res.status(200).json({
+      message: "Content types fetched successfully",
+      data: contents,
+    });
+  } catch (error) {
+    handleError(error, "An error occurred while fetching the content types");
+  }
+};
+
+export const getContentById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    const contentById = await getContentTypeById(id);
+    res.status(200).json({
+      message: "Content fetched successfully",
+      data: contentById,
+    });
+  } catch (error) {
+    handleError(error, "fetch content by ID");
+    res.status(500).json({
+      message: "An error occurred while fetching the content",
+    });
+  }
+};
+
+export const updateContentById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const updatedContent = await updateContent(id, updatedData);
+
+    res.status(200).json({
+      message: "Content updated successfully",
+      data: updatedContent,
+    });
+  } catch (error) {
+    handleError(error, "update content");
+    res.status(500).json({
+      message: "An error occurred while updating the content",
+    });
+  }
+};
+
+export const deleteContentById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    const deletedContent = await deleteContent(id);
+
+    res.status(200).json({
+      message: "Content deleted successfully",
+      data: deletedContent,
+    });
+  } catch (error) {
+    handleError(error, "delete content");
+    res.status(500).json({
+      message: "An error occurred while deleting the content",
+    });
+  }
+};
