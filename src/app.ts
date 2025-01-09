@@ -1,14 +1,15 @@
 import express from "express";
 
 import { connectDB } from "./mongo/db";
+import ContentType from './routes/contentType.routes'
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-
 connectDB();
 
+app.use(ContentType)
 
 app.get("/", (req, res) => {
   res.send("Server running");
