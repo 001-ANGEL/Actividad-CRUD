@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
+import { Schema } from "mongoose";
 
 import ContentType from "../schemas/contentType";
 import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
-import { handleError } from "../middlewares/props";
+import { documentToString, handleError } from "../middlewares/props";
 
 import {
   deleteContent,
@@ -51,12 +52,13 @@ export const getContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
-
+    const  { id } = req.params;
     const contentById = await getContentTypeById(id);
+    const contentData = documentToString(contentById);
+
     res.status(200).json({
       message: "Content fetched successfully",
-      data: contentById,
+      data: contentData,
     });
   } catch (error) {
     handleError(error, "fetch content by ID");
@@ -71,7 +73,7 @@ export const updateContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
+    const id = req.params.id;
     const updatedData = req.body;
 
     const updatedContent = await updateContent(id, updatedData);

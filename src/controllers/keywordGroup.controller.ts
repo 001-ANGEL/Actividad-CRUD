@@ -7,7 +7,7 @@ import {
   deleteKeywordGroup 
 } from "../services/keywordGroup.service";
 import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
-import { handleError } from "../middlewares/props";
+import { documentToString, handleError } from "../middlewares/props";
 
 export const createKeywordGroupController = async (
   req: Request,
@@ -54,10 +54,11 @@ export const getKeywordGroupByIdController = async (
   try {
     const { id } = req.params;
     const keywordGroup = await getKeywordGroupById(id);
+    const contentData = documentToString(keywordGroup);
 
     res.status(200).json({
       message: "Keyword group fetched successfully",
-      data: keywordGroup,
+      data: contentData,
     });
   } catch (error) {
     handleError(error, "fetch keyword group by ID");

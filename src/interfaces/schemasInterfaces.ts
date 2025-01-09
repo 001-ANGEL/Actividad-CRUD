@@ -14,7 +14,7 @@ export interface KeywordGroupInterface {
   keywordGroupId: number;
   groupName: string;
   visibility: "public" | "private";
-  ContentTypeId: Schema.Types.ObjectId;
+  ContentTypeId: string;
 }
 
 export interface UserProfileInterface {
