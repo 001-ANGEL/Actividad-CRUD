@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { 
-  createKeywordGroup, 
-  getAllKeywordGroups, 
-  getKeywordGroupById, 
-  updateKeywordGroup, 
-  deleteKeywordGroup 
+import {
+  createKeywordGroup,
+  getAllKeywordGroups,
+  getKeywordGroupById,
+  updateKeywordGroup,
+  deleteKeywordGroup,
 } from "../services/keywordGroup.service";
 import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
 import { handleError } from "../middlewares/props";

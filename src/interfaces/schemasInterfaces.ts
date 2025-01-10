@@ -1,7 +1,5 @@
 // * Interfaces for schemas
 
-import { Schema } from "mongoose";
-
 export interface ContentTypeInterface {
   contentTypeId: number;
   contentTypeName: string;
@@ -14,7 +12,7 @@ export interface KeywordGroupInterface {
   keywordGroupId: number;
   groupName: string;
   visibility: "public" | "private";
-  ContentTypeId: Schema.Types.ObjectId;
+  ContentTypeId: string;
 }
 
 export interface UserProfileInterface {

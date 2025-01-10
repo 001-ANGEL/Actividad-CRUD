@@ -21,6 +21,7 @@ export const getAllContentType = async () => {
 
 export const getContentTypeById = async (id: string) => {
   try {
+
     const contentById = await ContentType.findById(id);
     if (!contentById) {
       throw new Error("Content not found");

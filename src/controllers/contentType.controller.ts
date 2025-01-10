@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Schema } from "mongoose";
 
 import ContentType from "../schemas/contentType";
 import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
@@ -51,9 +52,10 @@ export const getContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
-
+    const  { id } = req.params;
     const contentById = await getContentTypeById(id);
+
+console.log(typeof id);
     res.status(200).json({
       message: "Content fetched successfully",
       data: contentById,
@@ -71,7 +73,7 @@ export const updateContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
+    const { id }= req.params;
     const updatedData = req.body;
 
     const updatedContent = await updateContent(id, updatedData);
