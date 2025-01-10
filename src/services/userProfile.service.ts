@@ -7,7 +7,7 @@ export const createUserProfile = async (data: UserProfileInterface) => {
     const newUserProfile = new UserProfile(data);
     return await newUserProfile.save();
   } catch (error) {
-    handleError(error, "create user profile");
+    handleError(error, "create user profile"); 
   }
 };
 
