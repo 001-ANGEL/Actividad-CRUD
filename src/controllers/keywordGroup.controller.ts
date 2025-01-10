@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { 
-  createKeywordGroup, 
-  getAllKeywordGroups, 
-  getKeywordGroupById, 
-  updateKeywordGroup, 
-  deleteKeywordGroup 
+import {
+  createKeywordGroup,
+  getAllKeywordGroups,
+  getKeywordGroupById,
+  updateKeywordGroup,
+  deleteKeywordGroup,
 } from "../services/keywordGroup.service";
 import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
-import { documentToString, handleError } from "../middlewares/props";
+import { handleError } from "../middlewares/props";
 
 export const createKeywordGroupController = async (
   req: Request,
@@ -54,11 +54,10 @@ export const getKeywordGroupByIdController = async (
   try {
     const { id } = req.params;
     const keywordGroup = await getKeywordGroupById(id);
-    const contentData = documentToString(keywordGroup);
 
     res.status(200).json({
       message: "Keyword group fetched successfully",
-      data: contentData,
+      data: keywordGroup,
     });
   } catch (error) {
     handleError(error, "fetch keyword group by ID");

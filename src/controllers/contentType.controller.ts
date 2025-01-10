@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 
 import ContentType from "../schemas/contentType";
 import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
-import { documentToString, handleError } from "../middlewares/props";
+import { handleError } from "../middlewares/props";
 
 import {
   deleteContent,
@@ -54,11 +54,11 @@ export const getContentTypeByIdController = async (
   try {
     const  { id } = req.params;
     const contentById = await getContentTypeById(id);
-    const contentData = documentToString(contentById);
 
+console.log(typeof id);
     res.status(200).json({
       message: "Content fetched successfully",
-      data: contentData,
+      data: contentById,
     });
   } catch (error) {
     handleError(error, "fetch content by ID");
@@ -73,7 +73,7 @@ export const updateContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const id = req.params.id;
+    const { id }= req.params;
     const updatedData = req.body;
 
     const updatedContent = await updateContent(id, updatedData);
