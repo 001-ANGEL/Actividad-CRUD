@@ -1,7 +1,5 @@
 // * Interfaces for schemas
 
-import { Schema } from "mongoose";
-
 export interface ContentTypeInterface {
   contentTypeId: number;
   contentTypeName: string;

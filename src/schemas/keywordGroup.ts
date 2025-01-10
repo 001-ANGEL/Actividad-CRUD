@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
 
-const KeywordsGroupSchema: Schema = new mongoose.Schema(
+const KeywordGroupSchema: Schema = new mongoose.Schema(
   {
     groupName: { type: String, required: true },
     visibility: {
@@ -23,5 +23,5 @@ const KeywordsGroupSchema: Schema = new mongoose.Schema(
 
 export default mongoose.model<KeywordGroupInterface & Document>(
   "keywordsGroup",
-  KeywordsGroupSchema
+  KeywordGroupSchema
 );
