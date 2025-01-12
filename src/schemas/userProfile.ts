@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { UserProfileInterface } from "../interfaces/schemasInterfaces";
+import { UserProfileInterface } from "../interfaces/global.interface";
 
 const UserProfileSchema: Schema = new mongoose.Schema(
   {

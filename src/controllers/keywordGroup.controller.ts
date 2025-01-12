@@ -6,8 +6,10 @@ import {
   updateKeywordGroup,
   deleteKeywordGroup,
 } from "../services/keywordGroup.service";
-import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
-import { handleError } from "../middlewares/props";
+
+import { KeywordGroupInterface } from "../interfaces/global.interface";
+import { contentNotFound, handleError, sendResponse } from "../helpers/global.helper";
+
 
 export const createKeywordGroupController = async (
   req: Request,
@@ -17,13 +19,17 @@ export const createKeywordGroupController = async (
     const data: KeywordGroupInterface = req.body;
     const newKeywordGroup = await createKeywordGroup(data);
 
-    res.status(201).json({
+    sendResponse({
+      res,
+      code: 201,
       message: "Keyword group created successfully",
       data: newKeywordGroup,
     });
   } catch (error) {
     handleError(error, "create keyword group");
-    res.status(500).json({
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while creating the keyword group",
     });
   }
@@ -35,13 +41,17 @@ export const getAllKeywordGroupsController = async (
 ): Promise<void> => {
   try {
     const keywordGroups = await getAllKeywordGroups();
-    res.status(200).json({
+    sendResponse({
+      res,
+      code: 200,
       message: "Keyword groups fetched successfully",
       data: keywordGroups,
     });
   } catch (error) {
     handleError(error, "fetch keyword groups");
-    res.status(500).json({
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while fetching the keyword groups",
     });
   }
@@ -55,13 +65,19 @@ export const getKeywordGroupByIdController = async (
     const { id } = req.params;
     const keywordGroup = await getKeywordGroupById(id);
 
-    res.status(200).json({
+    if (contentNotFound(keywordGroup, res)) return;
+
+    sendResponse({
+      res,
+      code: 200,
       message: "Keyword group fetched successfully",
       data: keywordGroup,
     });
   } catch (error) {
     handleError(error, "fetch keyword group by ID");
-    res.status(500).json({
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while fetching the keyword group",
     });
   }
@@ -76,13 +92,19 @@ export const updateKeywordGroupController = async (
     const updatedData: KeywordGroupInterface = req.body;
     const updatedKeywordGroup = await updateKeywordGroup(id, updatedData);
 
-    res.status(200).json({
+    if (contentNotFound(updatedKeywordGroup, res)) return;
+
+    sendResponse({
+      res,
+      code: 200,
       message: "Keyword group updated successfully",
       data: updatedKeywordGroup,
     });
   } catch (error) {
     handleError(error, "update keyword group");
-    res.status(500).json({
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while updating the keyword group",
     });
   }
@@ -96,14 +118,21 @@ export const deleteKeywordGroupController = async (
     const { id } = req.params;
     const deletedKeywordGroup = await deleteKeywordGroup(id);
 
-    res.status(200).json({
+    if (contentNotFound(deletedKeywordGroup, res)) return;
+
+    sendResponse({
+      res,
+      code: 200,
       message: "Keyword group deleted successfully",
       data: deletedKeywordGroup,
     });
   } catch (error) {
     handleError(error, "delete keyword group");
-    res.status(500).json({
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while deleting the keyword group",
     });
   }
 };
+

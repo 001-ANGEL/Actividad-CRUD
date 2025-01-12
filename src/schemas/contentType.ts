@@ -1,11 +1,11 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
+import { ContentTypeInterface } from "../interfaces/global.interface";
 
 const ContentType: Schema = new mongoose.Schema(
   {
-    ContentTypeName: { type: String, required: true },
-    Description: { type: String, default: null },
+    contentTypeName: { type: String, required: true },
+    description: { type: String, default: null },
     visibility: {
       type: String,
       enum: ["public", "private"],

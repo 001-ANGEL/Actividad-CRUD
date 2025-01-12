@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
+import { KeywordGroupInterface } from "../interfaces/global.interface";
 
 const KeywordGroupSchema: Schema = new mongoose.Schema(
   {
@@ -10,7 +10,7 @@ const KeywordGroupSchema: Schema = new mongoose.Schema(
       enum: ["public", "private"],
       default: "private",
     },
-    contentType: { 
+    contentTypeId: { 
       type: Schema.Types.ObjectId,
       ref: "ContentType", 
       required: true
@@ -22,6 +22,6 @@ const KeywordGroupSchema: Schema = new mongoose.Schema(
 );
 
 export default mongoose.model<KeywordGroupInterface & Document>(
-  "keywordsGroup",
+  "keywordGroup",
   KeywordGroupSchema
 );
