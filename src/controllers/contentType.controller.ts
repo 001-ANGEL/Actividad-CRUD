@@ -1,15 +1,13 @@
 import { Request, Response } from "express";
-import { Schema } from "mongoose";
-
 import ContentType from "../schemas/contentType";
-import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
-import { handleError } from "../middlewares/props";
-
+import { ContentTypeInterface } from "../interfaces/global.interface";
+import { handleError, sendResponse } from "../helpers/global.helper";
 import {
-  deleteContent,
   getContentTypeById,
   updateContent,
+  deleteContent,
 } from "../services/contentType.service";
+import { contentNotFound } from "../helpers/global.helper";
 
 export const createContentTypeController = async (
   req: Request,
@@ -20,13 +18,17 @@ export const createContentTypeController = async (
     const newContent = new ContentType(data);
     const savedContent = await newContent.save();
 
-    res.status(201).json({
+    sendResponse({
+      res,
+      code: 201,
       message: "Content type created successfully",
       data: savedContent,
     });
   } catch (error) {
     handleError(error, "Create content");
-    res.status(500).json({
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while creating the content type",
     });
   }
@@ -38,12 +40,19 @@ export const getAllContentsTypeController = async (
 ): Promise<void> => {
   try {
     const contents = await ContentType.find();
-    res.status(200).json({
+    sendResponse({
+      res,
+      code: 200,
       message: "Content types fetched successfully",
       data: contents,
     });
   } catch (error) {
-    handleError(error, "An error occurred while fetching the content types");
+    handleError(error, "Fetch content types");
+    sendResponse({
+      res,
+      code: 500,
+      message: "An error occurred while fetching the content types",
+    });
   }
 };
 
@@ -52,17 +61,23 @@ export const getContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const  { id } = req.params;
+    const { id } = req.params;
+
     const contentById = await getContentTypeById(id);
 
-console.log(typeof id);
-    res.status(200).json({
+    if(contentNotFound(contentById, res)) return;
+
+    sendResponse({
+      res,
+      code: 200,
       message: "Content fetched successfully",
       data: contentById,
     });
   } catch (error) {
-    handleError(error, "fetch content by ID");
-    res.status(500).json({
+    handleError(error, "Fetch content by ID");
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while fetching the content",
     });
   }
@@ -73,18 +88,24 @@ export const updateContentTypeByIdController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id }= req.params;
+    const { id } = req.params;
     const updatedData = req.body;
 
     const updatedContent = await updateContent(id, updatedData);
 
-    res.status(200).json({
+    if (contentNotFound(updatedContent, res)) return;
+
+    sendResponse({
+      res,
+      code: 200,
       message: "Content updated successfully",
       data: updatedContent,
     });
   } catch (error) {
-    handleError(error, "update content");
-    res.status(500).json({
+    handleError(error, "Update content");
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while updating the content",
     });
   }
@@ -99,13 +120,19 @@ export const deleteContentTypeByIdController = async (
 
     const deletedContent = await deleteContent(id);
 
-    res.status(200).json({
+    if (contentNotFound(deletedContent, res)) return;
+
+    sendResponse({
+      res,
+      code: 200,
       message: "Content deleted successfully",
       data: deletedContent,
     });
   } catch (error) {
-    handleError(error, "delete content");
-    res.status(500).json({
+    handleError(error, "Delete content");
+    sendResponse({
+      res,
+      code: 500,
       message: "An error occurred while deleting the content",
     });
   }

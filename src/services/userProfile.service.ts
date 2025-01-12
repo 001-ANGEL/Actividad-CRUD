@@ -1,6 +1,6 @@
-import { UserProfileInterface } from "../interfaces/schemasInterfaces";
+import { UserProfileInterface } from "../interfaces/global.interface";
 import UserProfile from "../schemas/userProfile";
-import { handleError } from "../middlewares/props";
+import { handleError } from "../helpers/global.helper";
 
 export const createUserProfile = async (data: UserProfileInterface) => {
   try {

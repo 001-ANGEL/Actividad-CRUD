@@ -1,7 +1,7 @@
+import { Response } from "express";
 // * Interfaces for schemas
 
 export interface ContentTypeInterface {
-  contentTypeId: number;
   contentTypeName: string;
   description: string;
   profileId: number;
@@ -20,4 +20,11 @@ export interface UserProfileInterface {
   profileType: "public" | "private";
   companyId: number;
   isActive: boolean;
+}
+
+export interface SendResponse {
+  res: Response;
+  code: number;
+  message: string;
+  data?: any;
 }

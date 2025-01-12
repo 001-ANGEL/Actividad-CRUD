@@ -1,6 +1,6 @@
-import { ContentTypeInterface } from "../interfaces/schemasInterfaces";
+import { ContentTypeInterface } from "../interfaces/global.interface";
 import ContentType from "../schemas/contentType";
-import { handleError } from "../middlewares/props";
+import { handleError } from "../helpers/global.helper";
 
 export const createContentType = async (data: ContentTypeInterface) => {
   try {
@@ -24,8 +24,9 @@ export const getContentTypeById = async (id: string) => {
 
     const contentById = await ContentType.findById(id);
     if (!contentById) {
-      throw new Error("Content not found");
+      return null;
     }
+
     return contentById;
   } catch (error) {
     handleError(error, "fetch content by ID");
@@ -46,7 +47,7 @@ export const updateContent = async (
       }
     );
     if (!updatedContent) {
-      throw new Error("Content not found for update");
+      return null;
     }
 
     return updatedContent;
@@ -59,7 +60,7 @@ export const deleteContent = async (id: string) => {
   try {
     const deletedContent = await ContentType.findByIdAndDelete(id);
     if (!deletedContent) {
-      throw new Error("Content not found for deletion");
+      return null;
     }
     return deletedContent;
   } catch (error) {

@@ -1,6 +1,6 @@
-import { KeywordGroupInterface } from "../interfaces/schemasInterfaces";
+import { KeywordGroupInterface } from "../interfaces/global.interface";
 import KeywordGroup from "../schemas/keywordGroup";
-import { handleError } from "../middlewares/props";
+import { handleError } from "../helpers/global.helper";
 
 export const createKeywordGroup = async (data: KeywordGroupInterface) => {
   try {
@@ -23,7 +23,7 @@ export const getKeywordGroupById = async (id: string) => {
   try {
     const keywordGroupById = await KeywordGroup.findById(id);
     if (!keywordGroupById) {
-      throw new Error("Keyword group not found");
+      return null;
     }
     return keywordGroupById;
   } catch (error) {
@@ -45,7 +45,7 @@ export const updateKeywordGroup = async (
       }
     );
     if (!updatedKeywordGroup) {
-      throw new Error("Keyword group not found for update");
+      return null
     }
 
     return updatedKeywordGroup;
@@ -58,7 +58,7 @@ export const deleteKeywordGroup = async (id: string) => {
   try {
     const deletedKeywordGroup = await KeywordGroup.findByIdAndDelete(id);
     if (!deletedKeywordGroup) {
-      throw new Error("Keyword group not found for deletion");
+      return null;
     }
     return deletedKeywordGroup;
   } catch (error) {
