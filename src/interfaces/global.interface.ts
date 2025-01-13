@@ -4,7 +4,7 @@ import { Response } from "express";
 export interface ContentTypeInterface {
   contentTypeName: string;
   description: string;
-  profileId: number;
+  profileId: string;
   visibility: "public" | "private";
 }
 

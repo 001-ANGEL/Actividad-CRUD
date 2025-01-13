@@ -11,7 +11,7 @@ const ContentType: Schema = new mongoose.Schema(
       enum: ["public", "private"],
       default: "private",
     },
-    profileId: { type: Number, default: null },
+    profileId: { type: String, default: null },  //change profileId to String
   },
   {
     timestamps: true,
