@@ -5,6 +5,7 @@ dist/
 
 package-lock.json
 
-package.json
 
 config.env
+
+preguntar.txt
